@@ -1,8 +1,8 @@
 
 rule combine_lr_hcp:
     input:
-        lh = hcp_mmp_to_native('results/hcp_mmp/sub-{subject}/lh.native.hcp-mmp.nii.gz'),
-        rh = hcp_mmp_to_native('results/hcp_mmp/sub-{subject}/rh.native.hcp-mmp.nii.gz')
+        lh = 'results/hcp_mmp/sub-{subject}/lh.native.hcp-mmp.nii.gz',
+        rh = 'results/hcp_mmp/sub-{subject}/rh.native.hcp-mmp.nii.gz'
     output:
         lh_rh = 'results/diffparc/sub-{subject}/masks/lh_rh.native.hcp-mmp.nii.gz'
     container: config['singularity_neuroglia']
@@ -39,7 +39,7 @@ rule transform_to_subject:
     
 rule resample_targets:
     input: 
-        dwi = join(config['fsl_bedpost_dir'],config['bedpost_mean_s0_samples']),
+        dwi = 'results/Diffusion_7T/{subject}.BedpostX/mean_S0samples.nii.gz',
         targets = 'results/diffparc/sub-{subject}/masks/lh_rh.native.hcp-mmp.nii.gz'
     params:
         seed_resolution = config['probtrack']['seed_resolution']
@@ -123,7 +123,7 @@ rule run_probtrack:
         mask = 'results/diffparc/sub-{subject}/masks/brain_mask_dwi.nii.gz',
         target_seg_dir = 'results/diffparc/sub-{subject}/targets'
     params:
-        bedpost_merged = join(config['fsl_bedpost_dir'],config['bedpost_merged_prefix']),
+        bedpost_merged = 'results/Diffusion_7T/{subject}.BedpostX/merged',
         probtrack_opts = config['probtrack']['opts'],
         out_target_seg = expand('results/diffparc/sub-{subject}/probtrack_{template}_{seed}/seeds_to_{target}.nii.gz',target=targets,allow_missing=True),
         nsamples = config['probtrack']['nsamples']
