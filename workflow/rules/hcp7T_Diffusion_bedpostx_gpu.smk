@@ -22,7 +22,7 @@ rule copy_hcp7T_Diffusion:
                 dwi7T_mask_nii = join(config['dwi_preproc_dir'],config['in_dwi_mask_nii'])
 	output:
 		outdir_copy = directory('results/Diffusion_7T/{subject}'),
-		dwi7T_nii_copy = 'results/Diffusion_7T/{subject}/data.nii,gz',
+		dwi7T_nii_copy = 'results/Diffusion_7T/{subject}/data.nii.gz',
 		dwi7T_bval_copy = 'results/Diffusion_7T/{subject}/bvals',
 		dwi7T_bvec_copy = 'results/Diffusion_7T/{subject}/bvecs',
 		dwi7T_grad_dev_copy = 'results/Diffusion_7T/{subject}/grad_dev.nii.gz',
